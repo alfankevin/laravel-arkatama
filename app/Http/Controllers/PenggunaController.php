@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pengguna;
+use Illuminate\Http\Request;
 use App\Http\Requests\StorePenggunaRequest;
 use App\Http\Requests\UpdatePenggunaRequest;
-use App\Models\Pengguna;
 
 class PenggunaController extends Controller
 {
@@ -13,7 +14,8 @@ class PenggunaController extends Controller
      */
     public function index()
     {
-        //
+        $user = Pengguna::all();
+        return view('main', compact('user'));
     }
 
     /**
@@ -27,9 +29,20 @@ class PenggunaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePenggunaRequest $request)
+    public function store(Request $request)
     {
-        //
+        $input = $request->input('user');
+        $data = explode(' ', $input);
+
+        if(count($data) >= 3) {
+            $user = new Pengguna();
+            $user->name = strtoupper($data[0]);
+            $user->age = $data[1];
+            $user->city = strtoupper($data[2]);
+            $user->save();
+        }
+        
+        return redirect()->route('index');
     }
 
     /**
