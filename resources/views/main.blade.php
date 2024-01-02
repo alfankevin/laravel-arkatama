@@ -11,11 +11,6 @@
       padding: 0;
       background-color: #f4f6f9;
     }
-    .flex {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
     .main {
       height: inherit;
       width: inherit;
@@ -25,20 +20,25 @@
       min-height: 500px;
       background: #fff;
     }
+    .center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   </style>
 </head>
 <body>
-  <section class="main flex">
-    <div class="container flex">
+  <section class="main center">
+    <div class="container center">
       <div>
-        <div>
+        <div class="center">
           <form action="{{ route('store') }}" method="POST">
             @csrf
-            <input type="text" name="user" placeholder="Nama Usia Kota" spellcheck="false" autocomplete="off">
+            <input type="text" name="user" placeholder="Nama Usia Kota" spellcheck="false" autocomplete="off" autofocus>
             <button>Save</button>
           </form>
         </div>
-        <div>
+        <div class="center">
           <table>
             <thead>
               <tr>
