@@ -32,16 +32,33 @@ class PenggunaController extends Controller
     public function store(Request $request)
     {
         $input = $request->input('user');
+
         $data = explode(' ', $input);
 
-        if(count($data) >= 3) {
-            $user = new Pengguna();
-            $user->name = strtoupper($data[0]);
-            $user->age = $data[1];
-            $user->city = strtoupper($data[2]);
-            $user->save();
+        $ageIndex = null;
+        foreach ($data as $index => $value) {
+            if (is_numeric($value)) {
+                $ageIndex = $index;
+                break;
+            }
         }
-        
+
+        if ($ageIndex !== null && $ageIndex > 0) {
+            $nameArray = array_slice($data, 0, $ageIndex);
+            $name = implode(' ', $nameArray);
+
+            $cityArray = array_slice($data, $ageIndex + 1);
+            $city = implode(' ', $cityArray);
+
+            $user = new Pengguna();
+            $user->name = strtoupper($name);
+            $user->age = $data[$ageIndex];
+            $user->city = strtoupper($city);
+            $user->save();
+        } else {
+            //
+        }
+
         return redirect()->route('index');
     }
 
